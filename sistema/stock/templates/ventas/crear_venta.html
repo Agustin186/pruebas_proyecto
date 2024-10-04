@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% load static %}
+{% block titulo %}Inicio{% endblock %}
+
+{% block contenido %}
+<div class="contenedor">
+    <div class="caja_venta">
+        <div class="header">
+            <h1>Nueva Venta</h1>
+        </div>
+
+        <form action="{% url 'crear_venta' %}" method="POST">
+            {% csrf_token %}
+            <!--FECHA DEL DIA-->
+            <div class="form-group">
+                <label for="fecha">Fecha:</label>
+                <input type="date" id="fecha_hs" name="fecha_hs" >
+            </div>
+
+            <!-- SELECCION DEL VENDEDOR -->
+            <div class="form-group">
+                <label for="vendedor">Vendedor:</label>
+                <select name="vendedor" id="vendedor">
+                    {% for empleado in empleados %}
+                    <option value="{{ empleado.id_emplead }}">{{ empleado.nombre_emplead }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        
+            <!-- SELECCION DEL CLIENTE -->
+            <div class="form-group">
+                <label>Cliente:</label>
+                <select name="cliente" id="cliente" >
+                    {% for cliente in clientes %}
+                    <option value="{{ cliente.id_cli }}" >{{ cliente.nombre_cli }} {{ cliente.apellido_cli }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        
+            <table id="tabla-venta">
+                <thead>
+                    <tr>
+                        <th>Descripcion</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Descuento</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- AQUI SE CARGAN LOS PRODUCTOS -->
+                </tbody>
+            </table>
+        
+            <div class="total">
+                <label for="total">Total:</label>
+                <input type="number" id="total" name="total" readonly value="0">
+            </div>
+            <div class="buttons">
+                <button class="btn btn-success" type="submit" value="Guardar">Aceptar</button>
+                <button type="button" onclick=window.location.href='{% url 'inicio' %}'>Salir</button>
+            </div>
+        </form>
+        
+    </div>
+
+    <!-- CAJA DE PRODUCTOS -->
+    <div class="caja_productos">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Productos</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-primary">
+                        <thead>
+                            <tr>
+                                <th scope="col">Codigo</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for producto in productos %}
+                            <tr>
+                                <td>{{ producto.id_prod }}</td>
+                                <td>{{ producto.nombre_prod }}</td>
+                                <td>{{ producto.precio_prod }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-success agregar-producto" data-id="{{ producto.id_prod }}" data-nombre="{{ producto.nombre_prod }}" data-precio="{{ producto.precio_prod }}">
+                                        Añadir
+                                    </button>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">No hay artículos disponibles.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Selecciona la fecha del día
+        var hoy = new Date().toISOString().split('T')[0];
+        document.getElementById('fecha_hs').value = hoy;
+
+        // Variables
+        const tablaVenta = document.querySelector('#tabla-venta tbody');
+        let totalVenta = 0;
+
+        // Funcion para actualizar el total
+        function actualizarTotal() {
+            const subtotales = document.querySelectorAll('.subtotal');
+            let total = 0;
+            subtotales.forEach(subtotal => {
+                total += parseFloat(subtotal.textContent);
+            });
+            document.getElementById('total').value = total.toFixed(2);
+        }
+
+        // Evento para añadir productos a la tabla de ventas
+        document.querySelectorAll('.agregar-producto').forEach(button => {
+            button.addEventListener('click', function () {
+                const id = this.dataset.id;
+                const nombre = this.dataset.nombre;
+                const precio = parseFloat(this.dataset.precio).toFixed(2);
+
+                // Crear una nueva fila para el producto
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                    <td>${nombre}</td>
+                    <td>${precio}</td>
+                    <td><input type="number" class="cantidad" value="1" min="1"></td>
+                    <td><input type="number" class="descuento" value="0" min="0" max="100"></td>
+                    <td class="subtotal">${precio}</td>
+                    <input type="hidden" name="productos[]" value="${id}">
+                    <input type="hidden" name="cantidades[]" value="1">
+                    <input type="hidden" name="descuentos[]" value="0">
+                    <input type="hidden" name="subtotales[]" value="${precio}">
+                    
+                `;
+
+                // Añadir la fila a la tabla
+                tablaVenta.appendChild(fila);
+
+                // Actualizar el total de la venta
+                actualizarTotal();
+
+                // Evento para recalcular subtotal cuando cambia la cantidad o el descuento
+                fila.querySelector('.cantidad').addEventListener('input', function () {
+                    const cantidad = parseFloat(this.value);
+                    const descuento = parseFloat(fila.querySelector('.descuento').value);
+
+                    const subtotal = (cantidad * precio) * (1 - descuento / 100);
+
+                    fila.querySelector('.subtotal').textContent = subtotal.toFixed(2);
+                    fila.querySelector('input[name="cantidades[]"]').value = cantidad;
+                    fila.querySelector('input[name="subtotales[]"]').value = subtotal.toFixed(2);
+                    actualizarTotal();
+                });
+
+                fila.querySelector('.descuento').addEventListener('input', function () {
+                    const cantidad = parseFloat(fila.querySelector('.cantidad').value);
+                    const descuento = parseFloat(this.value);
+                    const subtotal = (cantidad * precio) * (1 - descuento / 100);
+                    fila.querySelector('.subtotal').textContent = subtotal.toFixed(2);
+                    fila.querySelector('input[name="descuentos[]"]').value = descuento;
+                    fila.querySelector('input[name="subtotales[]"]').value = subtotal.toFixed(2);
+                    actualizarTotal();
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

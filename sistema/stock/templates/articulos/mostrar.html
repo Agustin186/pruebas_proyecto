@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block titulo %} Lista de Productos {% endblock %}
+
+{% block contenido %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="card">
+    <div class="card-header">Listar productos</div>
+    <div class="card-body">
+      <h4 class="card-title">Productos</h4>
+  
+      <div class="table-responsive">
+        <table class="table table-primary">
+          <thead>
+            <tr>
+              <th scope="col">Codigo</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for producto in productos %}
+            <tr class="">
+              <td scope="row">{{ producto.id_prod }}</td>
+              <td>{{ producto.nombre_prod }}</td>
+              <td>{{ producto.precio_prod }}</td>
+              <td> <a name="Editar" class="btn btn-primary" href="{% url "editar_articulos" producto.id_prod %}" role="button">Editar</a>
+                | <a name="" id="" class="btn btn-danger" href="{% url "eliminar_producto" producto.id_prod %}" role="button">Borrar</a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="4" class="text-center">No hay artículos disponibles.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+  
+    </div>
+    <a
+    name="agregar" class="btn btn-success" href="{% url "crear_articulos" %}" role="button">Agregar producto</a
+  >
+  </div>
+  
+  
+  </div>
+</body>
+</html>
+
+
+
+{% endblock %}

@@ -1,0 +1,199 @@
+html, body {
+    height: 100%; /* Asegura que ocupen toda la altura */
+    margin: 0; /* Elimina márgenes por defecto */
+    background-image: url("{% static 'imagenes/FONDODEPANTALLA.jpg' %}"); /* Asegúrate de que la ruta sea correcta */
+    background-size: cover; /* La imagen cubrirá todo el fondo */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center; /* Centra la imagen */
+    background-attachment: fixed; /* Fija la imagen para que no se desplace con el contenido */
+}
+
+/*-------------------------------------------------------------------*/
+
+/* Estilos para la barra superior */
+.top-bar {
+    position: fixed;
+    top: 0px;
+    left: 0;
+    width: calc(100% - 100px); /* Ajusta el ancho para considerar la barra lateral */
+    height: 58px; /* Altura de la barra superior */
+    background-color: white; /* Azul oscuro */
+    display: flex;
+    align-items: center; /* Centra verticalmente los elementos */
+    justify-content: center; /* Centra horizontalmente los elementos */
+    padding: 0 380px; /* Ajuste para hacer espacio al botón */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    gap: 20px; /* Espaciado entre elementos */
+}
+
+/*-----------------------------------------------------------------*/
+
+/* Ajusta la posición del contenedor principal SMARTCELL */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px; /* Espacio suficiente para la barra superior */
+    margin-left: 10px; /* Mueve el contenido para que no se superponga con la barra de navegación */
+    padding: 100px;
+}
+nav {
+    background-color: white; /* Azul más oscuro */
+    width: 98px; /* Ancho fijo */
+    height: calc(100vh - 50px); /* Altura completa menos la altura de la barra superior */
+    position: fixed; /* Fijar la barra en la parte izquierda */
+    top: 58px; /* Ajusta para que esté debajo de la barra superior */
+    left: 0;
+    display: flex;
+    flex-direction: column; /* Colocar los elementos en una columna */
+    box-shadow: 2px 0 5px rgba(251, 253, 255, 0.949); /* Sombra suave */
+}
+
+/*----------------------------------------------------------------*/
+
+/* BARRA LATERAL IZQUIERDO */
+.nav {
+    display: flex;
+    flex-direction: column; /* Los elementos estarán en una columna */
+    list-style-type: none;
+    padding-left: 0;
+    gap: 50px; /* Espaciado entre elementos */
+    
+}
+
+/*----------------------------------------------------------------*/
+
+/* BOTONES DE LA BARRA DE TAREA (INICIO ETC..) */
+.nav-item {
+    text-decoration: none;
+    color: rgb(243, 243, 243); /* Color blanco para los enlaces */
+    font-weight: bold;
+    padding: 12px 10px;
+    background-color: #186fb1; /* Azul más claro para los botones */
+    border-radius: 11px; /* Bordes redondeados */
+    text-align: center;
+    box-shadow: 0 3px 6px rgb(127, 174, 189); /* Sombra en los botones */
+    transition: transform 0.3s ease; /* Animación al hacer hover */
+}
+
+/*--------------------------------------------------------------*/
+
+/* SOMBRA PARA TODOS LOS BOTONES ) */
+.nav-item:hover {
+    background-color: #46b3c6; /* Color más oscuro al hacer hover */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño al hacer hover */
+}
+
+/*-------------------------------------------------------------*/
+
+
+
+.col-12 {
+    flex: 1;
+    padding: 100px;
+    background-color: rgb(254, 254, 254);
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(60, 50, 124, 0.819); /* Sombra */
+}
+
+/*---------------------------------------------------------------*/
+
+
+/* Columna */
+.col-12 {
+    padding: 20px; /* Ajusta según sea necesario */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente si lo deseas */
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(60, 50, 124, 0.819); /* Sombra */
+}
+
+
+/* Estilo de la barra de tareas inferior */
+.taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 120px; /* Ajusta la posición a la derecha de la barra lateral */
+    width: calc(100% - 120px); /* Ajusta el ancho para que considere la barra lateral */
+    background-color: #15161b; /* Azul oscuro */
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+}
+
+/*-----------------------------------------------------------------*/
+
+
+/* Estilos para el menú desplegable */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra suave para el menú */
+    z-index: 1;
+    border-radius: 10px; /* Redondeamos los bordes */
+    overflow: hidden; /* Para un look limpio */
+}
+
+.dropdown-menu a {
+    text-decoration: none;
+    color: #186fb1;
+    padding: 12px 16px;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover en las opciones del menú */
+.dropdown-menu a:hover {
+    background-color: rgba(127, 174, 189, 0.1); /* Fondo sutil en hover */
+}
+
+/* Mostrar el menú cuando se hace hover en el botón de caja */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Boton de cierre de sesion */
+.boton_cierre_sesion {
+    text-decoration: none;
+    color: #ffffff; /* Color de texto blanco */
+    background-color: #dc3545; /* Color de fondo rojo para destacar */
+    font-weight: bold;
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: 11px; /* Borde redondeado */
+    text-align: center;
+    box-shadow: 0 3px 6px rgba(127, 174, 189, 0.5); /* Sombra suave */
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Transición suave */
+}
+
+/* Efecto hover para cambiar ligeramente el color y agregar escala */
+.boton_cierre_sesion:hover {
+    background-color: #c82333; /* Cambio de color al pasar el mouse */
+    transform: scale(1.05); /* Agrandamiento ligero */
+}
+
+/* Efecto activo cuando se presiona */
+.boton_cierre_sesion:active {
+    background-color: #bd2130; /* Color más oscuro cuando se presiona */
+    transform: scale(1); /* Elimina el agrandamiento al hacer clic */
+}
+
+
+.invalid-feedback {
+    color: red; /* Cambia el color del texto a rojo */
+    font-weight: bold; /* Opcional: hace que el texto sea más grueso */
+}
+
+.alert-danger {
+    color: white; /* Cambia el color del texto a blanco para mayor contraste */
+    background-color: red; /* Fondo rojo para el mensaje de alerta */
+    border-color: darkred; /* Bordes más oscuros */
+}

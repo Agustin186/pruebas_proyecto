@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %}Inicio{% endblock %}
+
+{% block contenido %}
+    <div class="container mt-4">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>Artículos</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for producto in productos %}
+                            <li class="list-group-item">
+                                {{ producto.nombre_prod }} - ${{ producto.precio_prod }}
+                            </li>
+                        {% empty %}
+                            <li class="list-group-item">No hay artículos disponibles.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

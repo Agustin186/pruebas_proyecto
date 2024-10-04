@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block titulo %} Lista de Proveedores {% endblock %}
+
+{% block contenido %}
+
+<div class="box_principal">
+  <div class="Titulo">Lista de Proveedores</div>
+
+   <div class="box_secundaria">
+    <div class="tabla-responsive">
+      <table class="table table-primary">
+        <thead>
+          <tr>
+            <th scope="col">Codigo</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">CUIT</th>
+            <th scope="col">Correo electronico</th>
+            <th scope="col">Contacto</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for proveedor in proveedores %}
+
+          <tr class="">
+            <td scope="row">{{ proveedor.id_prov }}</td>
+            <td>{{ proveedor.nombre_prov }}</td>
+            <td>{{ proveedor.cuit_prov }}</td>
+            <td>{{ proveedor.correo_prov }}</td>
+            <td>{{ proveedor.tel_prov }}</td>
+            <td> <a name="Editar" class="btn btn-primary" href="{% url "editar_proveedores" proveedor.id_prov %}" role="button">Editar</a>
+              | <a name="" id="" class="btn btn-danger" href="{% url "eliminar_proveedores" proveedor.id_prov %}" role="button">Borrar</a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4" class="text-center">No existen proveedores</td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+
+      </table>
+    </div>
+
+  </div>
+  <a
+  name="agregar" class="btn_agregar" href="{% url "crear_proveedores" %}" role="button">Agregar Proveedor</a>
+</div>
+
+
+</div>
+
+
+
+{% endblock %}

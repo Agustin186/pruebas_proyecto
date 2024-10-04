@@ -1,0 +1,106 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.box_principal {
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    width: 80%;
+    position: fixed;
+}
+
+.Titulo {
+    background-color: #186fb1;
+    color: white;
+    padding: 15px;
+    border-radius: 10px 10px 0 0;
+    font-size: 1.25rem;
+}
+
+.box_secundaria {
+    padding: 20px;
+}
+
+
+/* Estilos para la tabla */
+.tabla-responsive {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #186fb1;
+    color: white;
+}
+
+table td {
+    color: #333;
+}
+
+table .btn {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.btn-primary {
+    background-color: #186fb1;
+    border: none;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    color: white;
+}
+
+.btn_agregar {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #57d470;
+    color: white;
+}
+
+/* Hover effects */
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Estilo para el mensaje vacío */
+.table td.text-center {
+    font-size: 1.2rem;
+    color: #888;
+}
+
+/* Espaciado entre botones */
+.buttons {
+    margin-top: 20px;
+}
+
+.buttons .btn {
+    margin-right: 10px;
+}
+

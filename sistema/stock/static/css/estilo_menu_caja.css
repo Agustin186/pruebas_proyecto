@@ -1,0 +1,10 @@
+
+/* Estilo para el menú desplegable al pasar el mouse */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Ocultar la flecha del dropdown */
+.dropdown > a::after {
+    display: none;
+}

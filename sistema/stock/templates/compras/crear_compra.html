@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Compra</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> <!-- Vinculación del archivo CSS -->
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Registrar Compra</h5>
+                        <form method="POST" action="{% url 'crear_compra' %}">
+                        
+                            <div class="form-group">
+                                <label for="proveedor">Proveedor:</label>
+                                <input type="text" class="form-control" id="proveedor" name="proveedor" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="producto">Producto:</label>
+                                <input type="text" class="form-control" id="producto" name="producto" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cantidad">Cantidad:</label>
+                                <input type="number" class="form-control" id="cantidad" name="cantidad" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="precio">Precio Unitario:</label>
+                                <input type="number" class="form-control" id="precio" name="precio" required>
+                            </div>
+                            <button type="button" class="btn btn-primary btn-block" onclick="agregarProducto()">Agregar Producto</button>
+                            <hr>
+
+                            <!-- Tabla de productos agregados -->
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio Unitario</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="detalle-compras">
+                                    <!-- Aquí se agregarán los productos -->
+                                </tbody>
+                            </table>
+
+                            <div class="form-group">
+                                <label for="total">Total:</label>
+                                <input type="number" class="form-control" id="total" name="total" readonly>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block">Registrar Compra</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script para manejar la tabla de productos -->
+    <script>
+        function agregarProducto() {
+            const producto = document.getElementById('producto').value;
+            const cantidad = document.getElementById('cantidad').value;
+            const precio = document.getElementById('precio').value;
+            const subtotal = cantidad * precio;
+
+            const table = document.getElementById('detalle-compras');
+            const row = table.insertRow();
+            row.innerHTML = `<td>${producto}</td><td>${cantidad}</td><td>${precio}</td><td>${subtotal.toFixed(2)}</td>`;
+
+            calcularTotal();
+        }
+
+        function calcularTotal() {
+            let total = 0;
+            const filas = document.querySelectorAll('#detalle-compras tr');
+            filas.forEach(fila => {
+                const subtotal = parseFloat(fila.cells[3].innerText);
+                total += subtotal;
+            });
+            document.getElementById('total').value = total.toFixed(2);
+        }
+    </script>
+</body>
+</html>
